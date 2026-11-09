@@ -1,4 +1,3 @@
-/* Perpustakaan Digital SMAN 10 Semarang — UI Redesign */
 :root {
   --bg: #F3F7FF;
   --ink: #0F1B3D;
@@ -30,14 +29,13 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
-/* Skala Teks & Layout Dikecilkan Agar Lebih Ringkas */
 body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
   font-family: "Plus Jakarta Sans", system-ui, sans-serif;
-  font-size: 14px;
-  line-height: 1.45;
+  font-size: 13px;
+  line-height: 1.4;
 }
 
 a {
@@ -63,7 +61,7 @@ p {
 }
 
 .ba {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--muted);
 }
 
@@ -72,7 +70,6 @@ p {
   font-weight: 700;
 }
 
-/* Sembunyikan Scrollbar Global (Bersih & Transparan) */
 * {
   -ms-overflow-style: none !important;
   scrollbar-width: none !important;
@@ -82,13 +79,24 @@ p {
   display: none !important;
 }
 
-/* Header Guest / Beranda Publik */
+.px {
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+@media (max-width: 900px) {
+  .px {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}
+
 .header-guest {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
-  padding: 14px 40px;
+  gap: 16px;
+  padding: 10px 32px;
   background: #ffffff;
   position: sticky;
   top: 0;
@@ -98,7 +106,7 @@ p {
 
 .guest-nav {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   font-weight: 600;
   align-items: center;
 }
@@ -108,45 +116,44 @@ p {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 14px 16px;
-    gap: 12px;
+    padding: 10px 14px;
+    gap: 10px;
     position: relative;
   }
 
-  .header-guest>a.logo {
+  .header-guest > a.logo {
     width: 100%;
     display: flex;
     justify-content: flex-start;
   }
 
-  .header-guest>div:last-child {
+  .header-guest > div:last-child {
     position: absolute;
-    top: 14px;
-    right: 16px;
+    top: 10px;
+    right: 14px;
   }
 
   .guest-nav {
     justify-content: center;
     width: 100%;
-    gap: 8px;
+    gap: 6px;
   }
 
   .nav-pill {
-    padding: 6px 14px;
-    font-size: 13px;
+    padding: 5px 12px;
+    font-size: 12px;
   }
 }
 
-/* Nav Pill Landing Page */
 .nav-pill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 7px 16px;
+  padding: 6px 14px;
   background: #000000;
   color: #ffffff;
   border-radius: 99px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   text-decoration: none;
   transition: all 0.2s ease-in-out;
@@ -157,24 +164,23 @@ p {
   color: var(--ink);
 }
 
-/* Buttons */
 .btn {
-  height: 44px;
-  border-radius: 12px;
+  height: 38px;
+  border-radius: 10px;
   background: var(--yellow);
   color: var(--ink);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font: 700 14px "Plus Jakarta Sans", sans-serif;
-  padding: 0 20px;
+  font: 700 13px "Plus Jakarta Sans", sans-serif;
+  padding: 0 16px;
   border: 0;
   cursor: pointer;
   white-space: nowrap;
 }
 
 .btn:hover {
-  filter: brightness(.97);
+  filter: brightness(.96);
 }
 
 .btn:disabled {
@@ -189,13 +195,14 @@ p {
 
 .btn-ghost {
   background: #fff;
-  border: 2px solid var(--line-2);
+  border: 1.5px solid var(--line-2);
 }
 
 .btn-sm {
-  height: 36px;
-  font-size: 13px;
-  padding: 0 14px;
+  height: 32px;
+  font-size: 12px;
+  padding: 0 12px;
+  border-radius: 8px;
 }
 
 .btn-block {
@@ -207,22 +214,21 @@ p {
   color: var(--no-fg);
 }
 
-/* Forms & Input Customization */
 .label {
   display: block;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .input {
   width: 100%;
-  height: 44px;
-  border: 2px solid var(--line-2);
-  border-radius: 12px;
+  height: 38px;
+  border: 1.5px solid var(--line-2);
+  border-radius: 10px;
   background: #ffffff !important;
-  padding: 0 14px;
-  font: 400 14px "Plus Jakarta Sans", sans-serif;
+  padding: 0 12px;
+  font: 400 13px "Plus Jakarta Sans", sans-serif;
   color: var(--ink) !important;
   outline: 0;
 }
@@ -235,7 +241,6 @@ p {
   color: #5B6890;
 }
 
-/* Menimpa background biru otomatis dari Autofill browser */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -244,32 +249,31 @@ input:-webkit-autofill:active {
   -webkit-text-fill-color: var(--ink) !important;
 }
 
-/* Dropdown Select Kustom */
 select.input,
 select {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234A5780' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%234A5780' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") !important;
   background-repeat: no-repeat !important;
-  background-position: right 14px center !important;
-  background-size: 14px !important;
-  padding-right: 40px !important;
+  background-position: right 12px center !important;
+  background-size: 12px !important;
+  padding-right: 36px !important;
   cursor: pointer;
 }
 
 select.input:focus,
 select:focus {
   border-color: var(--blue) !important;
-  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.15);
+  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
 }
 
 select option {
   background-color: #ffffff !important;
   color: var(--ink) !important;
   font-family: "Plus Jakarta Sans", sans-serif;
-  font-size: 14px;
-  padding: 10px 14px;
+  font-size: 13px;
+  padding: 8px 12px;
 }
 
 select option:hover,
@@ -283,66 +287,49 @@ select option:checked {
 
 .field-err {
   color: var(--no-fg);
-  font-size: 13px;
-  margin-top: 6px;
+  font-size: 12px;
+  margin-top: 4px;
 }
 
-/* Badges */
 .badge {
   display: inline-block;
   font-size: 11px;
   font-weight: 700;
-  padding: 3px 9px;
+  padding: 2px 8px;
   border-radius: 99px;
 }
 
-.ok {
-  background: var(--ok-bg);
-  color: var(--ok-fg);
-}
+.ok { background: var(--ok-bg); color: var(--ok-fg); }
+.no { background: var(--no-bg); color: var(--no-fg); }
+.wn { background: var(--wn-bg); color: var(--wn-fg); }
+.info { background: var(--info-bg); color: var(--info-fg); }
 
-.no {
-  background: var(--no-bg);
-  color: var(--no-fg);
-}
-
-.wn {
-  background: var(--wn-bg);
-  color: var(--wn-fg);
-}
-
-.info {
-  background: var(--info-bg);
-  color: var(--info-fg);
-}
-
-/* Cards & Covers */
 .cd {
   background: #fff;
-  border-radius: 18px;
+  border-radius: 14px;
 }
 
 .bk {
   position: relative;
   overflow: hidden;
   aspect-ratio: 2/3;
-  border-radius: 6px 12px 12px 6px;
-  padding: 12px;
+  border-radius: 6px 10px 10px 6px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   color: #fff;
-  font: 700 16px/1.1 "Bricolage Grotesque", sans-serif;
-  box-shadow: inset 6px 0 0 rgba(0, 0, 0, .15);
+  font: 700 14px/1.15 "Bricolage Grotesque", sans-serif;
+  box-shadow: inset 4px 0 0 rgba(0, 0, 0, .15);
 }
 
 .bk::before {
   content: "";
   position: absolute;
-  top: -20px;
-  right: -20px;
-  width: 80px;
-  height: 80px;
+  top: -16px;
+  right: -16px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   background: var(--c2);
 }
@@ -350,26 +337,26 @@ select option:checked {
 .bk::after {
   content: "";
   position: absolute;
-  top: 46px;
-  left: 14px;
-  width: 30px;
-  height: 8px;
-  border-radius: 4px;
+  top: 36px;
+  left: 10px;
+  width: 24px;
+  height: 6px;
+  border-radius: 3px;
   background: var(--c2);
 }
 
 .bk-sm {
-  width: 56px;
+  width: 48px;
   flex: none;
-  font-size: 11px;
-  padding: 6px;
+  font-size: 10px;
+  padding: 4px;
 }
 
 .bk-sm::before {
-  width: 40px;
-  height: 40px;
-  top: -10px;
-  right: -10px;
+  width: 32px;
+  height: 32px;
+  top: -8px;
+  right: -8px;
 }
 
 .bk-sm::after {
@@ -378,31 +365,32 @@ select option:checked {
 
 .book-card {
   background: #fff;
-  border-radius: 18px;
-  padding: 12px;
+  border-radius: 14px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
 }
 
 .book-card .bt {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
-  margin-top: 10px;
+  margin-top: 8px;
+  line-height: 1.3;
 }
 
 .book-card .badge {
   align-self: flex-start;
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 .book-card .btn {
-  margin-top: 10px;
+  margin-top: 8px;
   width: 100%;
 }
 
 .grid-books {
   display: grid;
-  gap: 16px;
+  gap: 14px;
   grid-template-columns: repeat(4, 1fr);
 }
 
@@ -410,12 +398,11 @@ select option:checked {
   grid-template-columns: repeat(5, 1fr);
 }
 
-/* Chips */
 .chip {
-  padding: 8px 16px;
+  padding: 6px 14px;
   border-radius: 99px;
   font-weight: 700;
-  font-size: 13px;
+  font-size: 12px;
   background: #fff;
   border: 0;
   cursor: pointer;
@@ -427,68 +414,47 @@ select option:checked {
   outline: 2px solid var(--ink);
 }
 
-.c0 {
-  background: var(--info-bg);
-  color: var(--info-fg);
-}
+.c0 { background: var(--info-bg); color: var(--info-fg); }
+.c1 { background: var(--ok-bg); color: var(--ok-fg); }
+.c2 { background: var(--wn-bg); color: var(--wn-fg); }
+.c3 { background: var(--no-bg); color: var(--no-fg); }
+.c4 { background: var(--pu-bg); color: var(--pu-fg); }
 
-.c1 {
-  background: var(--ok-bg);
-  color: var(--ok-fg);
-}
-
-.c2 {
-  background: var(--wn-bg);
-  color: var(--wn-fg);
-}
-
-.c3 {
-  background: var(--no-bg);
-  color: var(--no-fg);
-}
-
-.c4 {
-  background: var(--pu-bg);
-  color: var(--pu-fg);
-}
-
-/* Table */
 .tbl-wrap {
   overflow-x: auto;
-  border-radius: 18px;
+  border-radius: 14px;
   background: #fff;
 }
 
 .tbl {
-  min-width: 720px;
+  min-width: 680px;
 }
 
 .tr {
   display: grid;
   grid-template-columns: var(--cols);
-  gap: 12px;
-  padding: 12px 20px;
+  gap: 10px;
+  padding: 10px 16px;
   border-top: 1px solid var(--line);
-  font-size: 13px;
+  font-size: 12.5px;
   align-items: center;
 }
 
 .th {
   background: var(--head);
   color: var(--muted);
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
   border-top: 0;
   text-transform: uppercase;
 }
 
 .empty {
-  padding: 36px 20px;
+  padding: 28px 16px;
   text-align: center;
   color: var(--muted);
 }
 
-/* Row Actions */
 .row-actions {
   display: flex;
   gap: 6px;
@@ -499,9 +465,9 @@ select option:checked {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 5px 12px;
+  padding: 4px 10px;
   border-radius: 6px;
-  font: 700 12px "Plus Jakarta Sans", sans-serif;
+  font: 700 11.5px "Plus Jakarta Sans", sans-serif;
   cursor: pointer;
   border: 0;
   background: var(--info-bg);
@@ -518,74 +484,63 @@ select option:checked {
   color: var(--no-fg);
 }
 
-/* Page header */
 .page-head {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  gap: 16px;
-  margin-bottom: 20px;
+  gap: 12px;
+  margin-bottom: 16px;
   flex-wrap: wrap;
 }
 
 .page-head h1 {
-  font-size: 30px;
+  font-size: 24px;
   line-height: 1.1;
 }
 
-/* Flash Messages */
 .flash {
-  border-radius: 12px;
-  padding: 12px 16px;
-  margin-bottom: 18px;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
   font-weight: 600;
-  font-size: 13px;
+  font-size: 12.5px;
 }
 
-.flash.ok {
-  background: var(--ok-bg);
-  color: var(--ok-fg);
-}
-
-.flash.no {
-  background: var(--no-bg);
-  color: var(--no-fg);
-}
+.flash.ok { background: var(--ok-bg); color: var(--ok-fg); }
+.flash.no { background: var(--no-bg); color: var(--no-fg); }
 
 .flash ul {
   margin: 0;
-  padding-left: 16px;
+  padding-left: 14px;
 }
 
-/* Dialog Modal */
 dialog {
   border: 0;
-  border-radius: 20px;
-  padding: 24px;
-  max-width: 520px;
-  width: calc(100% - 32px);
+  border-radius: 16px;
+  padding: 20px;
+  max-width: 480px;
+  width: calc(100% - 24px);
   color: var(--ink);
   font-family: "Plus Jakarta Sans", sans-serif;
 }
 
 dialog::backdrop {
-  background: rgba(15, 27, 61, .55);
+  background: rgba(15, 27, 61, .5);
 }
 
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 12px;
 }
 
 .span2 {
   grid-column: 1/3;
 }
 
-/* Layout Admin */
 .admin {
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 230px 1fr;
   min-height: 100vh;
 }
 
@@ -599,20 +554,21 @@ dialog::backdrop {
 
 .side {
   background: #fff;
-  padding: 24px 16px;
+  padding: 18px 12px;
   display: flex;
   flex-direction: column;
   gap: 4px;
   position: sticky;
   top: 0;
-  height: 100vh;
-  font-size: 13px;
+  height: 100dvh;
+  font-size: 12.5px;
   font-weight: 600;
   border-right: 1px solid var(--line);
+  overflow-y: auto;
 }
 
 .side-head {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .side-close-btn {
@@ -620,15 +576,15 @@ dialog::backdrop {
 }
 
 .side .brand {
-  font-size: 18px;
-  margin: 0 0 4px 0;
+  font-size: 16px;
+  margin: 0 0 2px 0;
   color: var(--blue);
 }
 
 .side .sub {
-  font-size: 10px;
+  font-size: 9.5px;
   font-weight: 700;
-  letter-spacing: .06em;
+  letter-spacing: .05em;
   color: var(--muted);
   margin: 0;
 }
@@ -636,16 +592,16 @@ dialog::backdrop {
 .side-menu {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
   width: 100%;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .nav-i {
-  padding: 9px 12px;
-  border-radius: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
   display: flex;
-  gap: 10px;
+  gap: 8px;
   align-items: center;
   white-space: nowrap;
   color: var(--ink);
@@ -670,23 +626,22 @@ dialog::backdrop {
   flex: 1;
 }
 
-/* Tombol Keluar */
 .logout-form {
   width: 100%;
-  margin-top: 14px;
+  margin-top: 10px;
 }
 
 .btn-logout {
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  border-radius: 12px;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 10px;
   background: #FEF2F2;
   color: #DC2626;
   border: 1px solid #FCA5A5;
-  font: 700 13px "Plus Jakarta Sans", sans-serif;
+  font: 700 12px "Plus Jakarta Sans", sans-serif;
   cursor: pointer;
   transition: all 0.2s ease;
   text-align: left;
@@ -698,46 +653,44 @@ dialog::backdrop {
   border-color: #F87171;
 }
 
-/* Main Content Area */
 .main {
-  padding: 28px 36px;
+  padding: 20px 28px;
   min-width: 0;
 }
 
 .stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-  margin-bottom: 24px;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
 .stat {
-  border-radius: 18px;
-  padding: 18px;
+  border-radius: 14px;
+  padding: 14px;
 }
 
 .stat .t {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
 }
 
 .stat .n {
-  font-size: 38px;
+  font-size: 30px;
 }
 
-/* Tabs Navigasi & Pilihan */
 .tabs {
   display: flex;
-  gap: 8px;
-  margin-bottom: 16px;
+  gap: 6px;
+  margin-bottom: 14px;
   flex-wrap: wrap;
 }
 
 .tab {
-  padding: 9px 18px;
+  padding: 7px 14px;
   border-radius: 99px;
   font-weight: 700;
-  font-size: 13px;
+  font-size: 12px;
   background: #fff;
   border: 0;
   cursor: pointer;
@@ -752,33 +705,32 @@ dialog::backdrop {
 
 .receipt {
   background: #fff;
-  border-radius: 20px;
-  padding: 22px;
+  border-radius: 16px;
+  padding: 18px;
   align-self: start;
 }
 
 .rrow {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
-  padding: 10px 0;
+  gap: 10px;
+  padding: 8px 0;
   border-top: 1px solid var(--line);
-  font-size: 13px;
+  font-size: 12.5px;
 }
 
 .manual {
   display: flex;
-  gap: 8px;
-  margin-top: 12px;
+  gap: 6px;
+  margin-top: 10px;
 }
 
-/* Shell Siswa & Top Navigation */
 .top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
-  padding: 16px 40px;
+  gap: 16px;
+  padding: 12px 32px;
   background: #fff;
   position: sticky;
   top: 0;
@@ -788,24 +740,24 @@ dialog::backdrop {
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .logo-mark {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
   background: var(--blue);
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 15px;
 }
 
 .top nav {
   display: flex;
-  gap: 28px;
+  gap: 20px;
   font-weight: 600;
 }
 
@@ -816,8 +768,8 @@ dialog::backdrop {
 .top .who {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 13px;
+  gap: 10px;
+  font-size: 12px;
   font-weight: 600;
 }
 
@@ -835,31 +787,31 @@ dialog::backdrop {
 }
 
 .wrap {
-  padding: 28px 40px 56px;
+  padding: 20px 32px 40px;
 }
 
 .cat-box {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 6px 0;
+  gap: 8px;
+  padding: 4px 0;
   cursor: pointer;
 }
 
 .cat-box input {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   accent-color: var(--blue);
 }
 
 .loan {
   background: #fff;
-  border-radius: 18px;
-  padding: 14px;
+  border-radius: 14px;
+  padding: 12px;
   display: flex;
-  gap: 14px;
+  gap: 12px;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .loan .info-col {
@@ -867,16 +819,15 @@ dialog::backdrop {
   min-width: 0;
 }
 
-/* Hero Section */
 .hero {
   background: var(--blue);
   color: #fff;
-  margin: 16px 40px 0;
-  border-radius: 24px;
-  padding: 40px 48px;
+  margin: 12px 32px 0;
+  border-radius: 20px;
+  padding: 28px 36px;
   display: grid;
   grid-template-columns: 1.1fr 1fr;
-  gap: 36px;
+  gap: 24px;
   align-items: center;
   position: relative;
   overflow: hidden;
@@ -884,26 +835,26 @@ dialog::backdrop {
 
 .hero .orb {
   position: absolute;
-  right: -80px;
-  top: -100px;
-  width: 320px;
-  height: 320px;
+  right: -60px;
+  top: -80px;
+  width: 260px;
+  height: 260px;
   border-radius: 50%;
   background: var(--blue-2);
 }
 
 .hero h1 {
-  font-size: 42px;
-  line-height: 1.1;
-  margin: 14px 0 14px;
+  font-size: 30px;
+  line-height: 1.15;
+  margin: 10px 0 12px;
 }
 
 .hero p {
-  font-size: 15px;
-  line-height: 1.5;
+  font-size: 13.5px;
+  line-height: 1.45;
   color: #DCE6FF;
-  margin: 0 0 24px;
-  max-width: 460px;
+  margin: 0 0 18px;
+  max-width: 420px;
 }
 
 .pill {
@@ -911,8 +862,8 @@ dialog::backdrop {
   background: var(--yellow);
   color: var(--ink);
   font-weight: 700;
-  font-size: 12px;
-  padding: 6px 12px;
+  font-size: 11px;
+  padding: 4px 10px;
   border-radius: 99px;
 }
 
@@ -920,11 +871,10 @@ dialog::backdrop {
   position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+  gap: 10px;
   align-items: center;
 }
 
-/* Halaman Auth (Login & Register Banner) */
 .auth {
   min-height: 100vh;
   display: grid;
@@ -936,7 +886,7 @@ dialog::backdrop {
 }
 
 .auth .art {
-  padding: 48px;
+  padding: 36px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -953,62 +903,62 @@ dialog::backdrop {
 }
 
 .auth .art h1 {
-  font-size: 48px;
-  line-height: 1.04;
-  margin: 0 0 16px;
+  font-size: 36px;
+  line-height: 1.05;
+  margin: 0 0 12px;
 }
 
 .auth .art p {
-  font-size: 15px;
-  line-height: 1.5;
+  font-size: 13.5px;
+  line-height: 1.45;
   color: #DCE6FF;
-  max-width: 380px;
+  max-width: 340px;
   margin: 0 auto;
 }
 
-.auth .art>* {
+.auth .art > * {
   position: relative;
   z-index: 2;
 }
 
-.auth .art>.o1,
-.auth .art>.o2 {
+.auth .art > .o1,
+.auth .art > .o2 {
   position: absolute;
   z-index: 1;
 }
 
 .auth .art .o1 {
-  right: -80px;
-  bottom: -80px;
-  width: 300px;
-  height: 300px;
+  right: -60px;
+  bottom: -60px;
+  width: 240px;
+  height: 240px;
   border-radius: 50%;
   background: var(--yellow);
 }
 
 .auth .art .o2 {
-  right: 100px;
-  bottom: 130px;
-  width: 80px;
-  height: 80px;
+  right: 80px;
+  bottom: 100px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   background: var(--coral);
 }
 
 .auth .art.green .o1 {
   right: auto;
-  left: 50px;
-  bottom: -50px;
-  width: 140px;
-  height: 140px;
+  left: 40px;
+  bottom: -40px;
+  width: 120px;
+  height: 120px;
 }
 
 .auth .art.green .o2 {
-  right: -70px;
-  top: -70px;
+  right: -50px;
+  top: -50px;
   bottom: auto;
-  width: 260px;
-  height: 260px;
+  width: 200px;
+  height: 200px;
   background: #10B981;
 }
 
@@ -1016,51 +966,49 @@ dialog::backdrop {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px;
+  padding: 32px;
   background: #fff;
 }
 
 .auth form {
   width: 100%;
-  max-width: 380px;
+  max-width: 340px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 .auth h2 {
-  font-size: 32px;
+  font-size: 26px;
 }
 
-/* Steps / Cara Meminjam */
 .steps {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  padding: 0 40px 48px;
+  gap: 12px;
+  padding: 0 32px 36px;
 }
 
 .step {
   background: #fff;
-  border-radius: 18px;
-  padding: 18px;
+  border-radius: 14px;
+  padding: 14px;
 }
 
 .step .n {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: var(--yellow);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  margin-bottom: 10px;
-  font-size: 13px;
+  margin-bottom: 8px;
+  font-size: 12px;
 }
 
-/* Media Query Layar Laptop & Tablet */
-@media (max-width:1100px) {
+@media (max-width: 1100px) {
   .grid-books,
   .grid-books.five {
     grid-template-columns: repeat(3, 1fr);
@@ -1075,8 +1023,7 @@ dialog::backdrop {
   }
 }
 
-/* Media Query Layar Mobile / HP (<= 900px) */
-@media (max-width:900px) {
+@media (max-width: 900px) {
   .admin {
     display: block;
   }
@@ -1084,8 +1031,8 @@ dialog::backdrop {
   .mobile-topbar {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
+    gap: 10px;
+    padding: 10px 14px;
     background: #ffffff;
     border-bottom: 1px solid var(--line);
     position: sticky;
@@ -1096,9 +1043,9 @@ dialog::backdrop {
   .hamburger-btn {
     background: var(--head);
     border: 0;
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1128,33 +1075,45 @@ dialog::backdrop {
     top: 0;
     left: 0;
     width: 260px;
-    height: 100vh;
+    height: 100dvh;
     z-index: 50;
     background: #ffffff;
-    padding: 20px 16px;
+    padding: 16px 14px 28px 14px;
     box-shadow: 6px 0 24px rgba(15, 27, 61, 0.12);
     border-right: 0;
     transform: translateX(-100%);
     transition: transform 0.25s ease;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
   }
 
   .side.active {
     transform: translateX(0);
   }
 
+  .side .spacer {
+    flex: 1 !important;
+    min-height: 40px !important;
+  }
+
+  .logout-form {
+    margin-top: auto !important;
+  }
+
   .main {
-    padding: 20px 14px;
+    padding: 16px 12px;
   }
 
   .hero {
     grid-template-columns: 1fr;
     margin: 8px 14px 0;
-    padding: 28px 20px;
-    gap: 20px;
+    padding: 20px 16px;
+    gap: 16px;
   }
 
   .hero h1 {
-    font-size: 32px;
+    font-size: 24px;
   }
 
   .hero-books {
@@ -1170,25 +1129,25 @@ dialog::backdrop {
   }
 
   .auth .art {
-    padding: 32px 16px 40px;
-    gap: 6px;
+    padding: 24px 16px 32px;
+    gap: 4px;
     min-height: 0;
   }
 
   .auth .art h1 {
-    font-size: 22px !important;
+    font-size: 20px !important;
   }
 
   .auth .panel {
     flex: 1;
     align-items: flex-start;
-    padding: 24px 16px 36px;
-    margin-top: -24px;
-    border-radius: 24px 24px 0 0;
+    padding: 20px 14px 28px;
+    margin-top: -20px;
+    border-radius: 20px 20px 0 0;
   }
 
   .top {
-    padding: 12px 14px;
+    padding: 10px 14px;
   }
 
   .top nav {
@@ -1196,12 +1155,12 @@ dialog::backdrop {
   }
 
   .wrap {
-    padding: 20px 14px 80px;
+    padding: 16px 14px 60px;
   }
 
   .steps {
     grid-template-columns: 1fr;
-    padding: 0 14px 36px;
+    padding: 0 14px 28px;
   }
 
   .bnav {
@@ -1209,21 +1168,20 @@ dialog::backdrop {
   }
 }
 
-@media (max-width:560px) {
-
+@media (max-width: 560px) {
   .grid-books,
   .grid-books.five {
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 10px;
   }
 
   .stats {
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 8px;
   }
 
   .stat .n {
-    font-size: 32px;
+    font-size: 26px;
   }
 
   .form-grid {
@@ -1235,47 +1193,33 @@ dialog::backdrop {
   }
 }
 
-/* Helper Padding */
-.px {
-  padding-left: 40px;
-  padding-right: 40px;
-}
-
-@media (max-width:900px) {
-  .px {
-    padding-left: 14px;
-    padding-right: 14px;
-  }
-}
-
-/* Styling Global SweetAlert2 untuk Seluruh Aplikasi */
 .swal2-popup {
   font-family: "Plus Jakarta Sans", system-ui, sans-serif !important;
-  border-radius: 20px !important;
-  padding: 24px !important;
+  border-radius: 16px !important;
+  padding: 20px !important;
   background: #ffffff !important;
 }
 
 .swal2-title {
   font-family: "Bricolage Grotesque", sans-serif !important;
-  font-size: 20px !important;
+  font-size: 18px !important;
   color: var(--ink) !important;
 }
 
 .swal2-html-container {
-  font-size: 14px !important;
+  font-size: 13px !important;
   color: var(--muted) !important;
 }
 
 .swal2-actions {
-  gap: 8px !important;
+  gap: 6px !important;
 }
 
 .swal2-confirm, 
 .swal2-cancel {
-  border-radius: 10px !important;
+  border-radius: 8px !important;
   font-weight: 700 !important;
-  font-size: 13px !important;
-  padding: 10px 20px !important;
+  font-size: 12px !important;
+  padding: 8px 16px !important;
   box-shadow: none !important;
 }

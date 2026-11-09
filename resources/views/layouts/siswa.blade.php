@@ -7,7 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <!-- Versioning cache-busting ?v=1.1 agar CSS terbaru selalu terunduh -->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=1.1">
     @stack('styles')
 </head>
 <body>
@@ -99,7 +100,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // 1. Handling Flash Message Session Laravel
             @if (session('success'))
                 Swal.fire({
                     icon: 'success',
@@ -142,7 +142,6 @@
                 });
             @endif
 
-            // 2. Override window.alert() Bawaan Browser
             window.alert = function (message) {
                 Swal.fire({
                     title: 'Informasi',
@@ -153,7 +152,6 @@
                 });
             };
 
-            // 3. Otomatis Cegat Form Hapus / Konfirmasi
             document.addEventListener('submit', function (e) {
                 const form = e.target;
                 const onsubmitAttr = form.getAttribute('onsubmit') || '';

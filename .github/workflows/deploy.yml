@@ -1,0 +1,28 @@
+name: Deploy to InfinityFree
+
+on:
+  push:
+    branches:
+      - main  # Ubah ke master jika branch utama di GitHub Anda bernama master
+
+jobs:
+  web-deploy:
+    name: Sync Files via FTP
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Upload Files via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /perpustakaansman10.lovestoblog.com/htdocs/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .env
+            node_modules/**
+            vendor/**
