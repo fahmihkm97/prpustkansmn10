@@ -24,7 +24,12 @@
             <div class="tr row" data-search="{{ strtolower($b->title . ' ' . $b->author . ' ' . $b->category) }}">
                 <div>
                     @if ($b->cover_image)
-                        <img src="{{ asset('storage/' . $b->cover_image) }}" alt="{{ $b->title }}" style="width:40px;height:56px;object-fit:cover;border-radius:6px">
+                        <img src="{{ asset('storage/' . $b->cover_image) }}" alt="{{ $b->title }}" 
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                             style="width:40px;height:56px;object-fit:cover;border-radius:6px">
+                        <div style="display:none;width:40px;height:56px;background:var(--head);border-radius:6px;align-items:center;justify-content:center;font-weight:700;color:var(--muted);font-size:12px">
+                            {{ strtoupper(substr($b->title, 0, 1)) }}
+                        </div>
                     @else
                         <div style="width:40px;height:56px;background:var(--head);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--muted);font-size:12px">
                             {{ strtoupper(substr($b->title, 0, 1)) }}

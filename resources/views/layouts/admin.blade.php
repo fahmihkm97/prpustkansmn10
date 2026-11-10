@@ -7,7 +7,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Versioning cache-busting ?v=1.1 agar CSS terbaru selalu terunduh -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=1.1">
     @stack('styles')
 </head>
@@ -110,10 +109,9 @@
                     icon: 'success',
                     title: 'Berhasil!',
                     text: "{{ session('success') }}",
-                    timer: 3000,
+                    timer: 2000,
                     showConfirmButton: false,
-                    toast: true,
-                    position: 'top-end'
+                    position: 'center'
                 });
             @endif
 

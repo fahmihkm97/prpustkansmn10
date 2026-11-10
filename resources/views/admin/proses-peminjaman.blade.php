@@ -5,7 +5,7 @@
 <div class="page-head">
     <div>
         <h1 class="s">Proses Peminjaman</h1>
-        <div class="ba">Masukkan Kode Transaksi (BOOK) untuk mengecek detail serta memproses penyerahan / pengembalian buku</div>
+        <div class="ba">Masukkan Kode Transaksi (BOOK/TRX) untuk mengecek detail serta memproses penyerahan / pengembalian buku</div>
     </div>
 </div>
 
@@ -14,7 +14,7 @@
     <div class="cd" style="padding:28px;margin-bottom:24px">
         <label class="label">Kode Pinjaman</label>
         <div style="display:flex;gap:12px">
-            <input class="input" id="trx_input" placeholder="Ketik kode (contoh: BOOK-8F9A2B)" style="flex:1" autofocus autocomplete="off">
+            <input class="input" id="trx_input" placeholder="Ketik kode (contoh: TRX-8F9A2B)" style="flex:1" autofocus autocomplete="off">
             <button type="button" class="btn btn-blue" id="btn-cek">Cek Transaksi</button>
         </div>
         <div id="trx-error" class="field-err" style="display:none;margin-top:10px;font-weight:600"></div>
@@ -133,38 +133,72 @@ function cariTransaksi() {
 }
 
 function prosesSerahkan(code) {
-    if (!confirm(`Konfirmasi penyerahan buku untuk transaksi ${code}?`)) return;
-
-    fetch('{{ route("admin.peminjaman.approve") }}', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        },
-        body: JSON.stringify({ trx_code: code })
-    })
-    .then(r => r.json())
-    .then(res => {
-        alert(res.message);
-        if (res.success) cariTransaksi();
+    Swal.fire({
+        title: 'Konfirmasi Penyerahan',
+        text: `Konfirmasi penyerahan buku untuk transaksi ${code}?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#1D4ED8',
+        cancelButtonColor: '#4A5780',
+        confirmButtonText: 'Ya, Serahkan',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch('{{ route("admin.peminjaman.approve") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ trx_code: code })
+            })
+            .then(r => r.json())
+            .then(res => {
+                Swal.fire({
+                    icon: res.success ? 'success' : 'error',
+                    title: res.success ? 'Berhasil!' : 'Gagal!',
+                    text: res.message,
+                    timer: res.success ? 2000 : undefined,
+                    showConfirmButton: !res.success
+                });
+                if (res.success) cariTransaksi();
+            });
+        }
     });
 }
 
 function prosesKembalikan(code) {
-    if (!confirm(`Konfirmasi pengembalian buku untuk transaksi ${code}?`)) return;
-
-    fetch('{{ route("admin.pengembalian.approve") }}', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        },
-        body: JSON.stringify({ trx_code: code })
-    })
-    .then(r => r.json())
-    .then(res => {
-        alert(res.message);
-        if (res.success) cariTransaksi();
+    Swal.fire({
+        title: 'Konfirmasi Pengembalian',
+        text: `Konfirmasi pengembalian buku untuk transaksi ${code}?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#059669',
+        cancelButtonColor: '#4A5780',
+        confirmButtonText: 'Ya, Kembalikan',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch('{{ route("admin.pengembalian.approve") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ trx_code: code })
+            })
+            .then(r => r.json())
+            .then(res => {
+                Swal.fire({
+                    icon: res.success ? 'success' : 'error',
+                    title: res.success ? 'Berhasil!' : 'Gagal!',
+                    text: res.message,
+                    timer: res.success ? 2000 : undefined,
+                    showConfirmButton: !res.success
+                });
+                if (res.success) cariTransaksi();
+            });
+        }
     });
 }
 
