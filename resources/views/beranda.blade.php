@@ -31,14 +31,14 @@
 </header>
 
 <!-- Hero Section (Responsif Desktop & Mobile) -->
-<section class="hero" style="position:relative; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:24px; padding:32px 24px; overflow:hidden;">
+<section class="hero" style="position:relative; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:24px; padding:40px 28px; overflow:hidden;">
     <div class="orb"></div>
     
     <!-- Kolom Teks Kiri -->
-    <div style="position:relative; z-index:2; flex:1 1 300px; max-width:580px;">
-        <span class="pill" style="margin-bottom:12px; display:inline-block;">Perpustakaan digital sekolah</span>
+    <div style="position:relative; z-index:2; flex:1 1 320px; max-width:560px;">
+        <span class="pill" style="margin-bottom:14px; display:inline-block;">Perpustakaan digital sekolah</span>
         
-        <h1 class="s" style="font-size: clamp(20px, 4vw, 30px); font-weight:800; line-height:1.3; margin-bottom:18px; word-break:break-word;">
+        <h1 class="s" style="font-size: clamp(22px, 4vw, 32px); font-weight:800; line-height:1.25; margin-bottom:20px; word-break:break-word;">
             Temukan buku favoritmu, pinjam dalam sekejap.
         </h1>
         
@@ -48,20 +48,62 @@
         </div>
     </div>
 
-    <!-- Hiasan Sampul Buku Melayang di Sisi Kanan (Responsif) -->
-    <div style="position:relative; z-index:2; display:flex; gap:10px; align-items:center; justify-content:center; flex:0 1 auto; margin:0 auto;">
+    <!-- Hiasan Kartu Buku Melayang di Sisi Kanan (Ukuran Lebih Besar & Elemen Kartu Lengkap) -->
+    <div style="position:relative; z-index:2; display:flex; gap:16px; align-items:center; justify-content:center; flex:0 1 auto; margin:0 auto;">
         @if ($hero->isNotEmpty())
             @foreach ($hero as $i => $b)
-                @php $rotate = ['rotate(-6deg)', 'translateY(-10px)', 'rotate(6deg)'][$i % 3]; @endphp
-                <div style="transform:{{ $rotate }}; background:#fff; padding:4px; border-radius:6px; box-shadow:0 6px 16px rgba(0,0,0,0.15); max-width:85px;">
-                    @include('partials.sampul-buku', ['title' => $b->title])
+                @php 
+                    $rotate = ['rotate(-6deg) translateY(6deg)', 'translateY(-14px) scale(1.05)', 'rotate(6deg) translateY(6deg)'][$i % 3]; 
+                @endphp
+                <div style="transform:{{ $rotate }}; background:#ffffff; padding:8px; border-radius:12px; box-shadow:0 12px 28px rgba(15,27,61,0.22); width:125px; transition:all 0.3s ease;">
+                    <!-- Cover Sampul Buku -->
+                    <div style="border-radius:6px; overflow:hidden;">
+                        @include('partials.sampul-buku', ['title' => $b->title, 'cover_image' => $b->cover_image])
+                    </div>
+                    <!-- Detail Informasi Kartu Buku -->
+                    <div style="margin-top:8px; text-align:left;">
+                        <div class="s" style="font-size:12px; font-weight:700; color:var(--ink); line-height:1.25; height:30px; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">
+                            {{ $b->title }}
+                        </div>
+                        <div style="font-size:10px; color:var(--muted); margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                            {{ $b->author }}
+                        </div>
+                        <div style="margin-top:6px;">
+                            <span class="badge {{ $b->stock > 0 ? 'ok' : 'no' }}" style="font-size:9px; padding:2px 6px;">
+                                {{ $b->stock > 0 ? 'Tersedia' : 'Habis' }}
+                            </span>
+                        </div>
+                    </div>
                 </div>
             @endforeach
         @else
-            <!-- Fallback Mockup Kartu -->
-            <div style="transform:rotate(-6deg); background:#fff; padding:6px 10px; border-radius:6px; width:65px; height:90px; display:flex; align-items:center; justify-content:center; text-align:center; font-size:10px; font-weight:bold; color:#1e40af; box-shadow:0 6px 16px rgba(0,0,0,0.15);">📖 Novel</div>
-            <div style="transform:translateY(-10px); background:#fff; padding:6px 10px; border-radius:6px; width:70px; height:95px; display:flex; align-items:center; justify-content:center; text-align:center; font-size:10px; font-weight:bold; color:#1e40af; box-shadow:0 6px 16px rgba(0,0,0,0.15);">📚 Sains</div>
-            <div style="transform:rotate(6deg); background:#fff; padding:6px 10px; border-radius:6px; width:65px; height:90px; display:flex; align-items:center; justify-content:center; text-align:center; font-size:10px; font-weight:bold; color:#1e40af; box-shadow:0 6px 16px rgba(0,0,0,0.15);">📕 Sejarah</div>
+            <!-- Fallback Mockup Kartu Utuh Jika Database Kosong -->
+            <div style="transform:rotate(-6deg) translateY(6deg); background:#ffffff; padding:8px; border-radius:12px; box-shadow:0 12px 28px rgba(15,27,61,0.22); width:125px;">
+                <div class="bk" style="background:#10B981; height:120px; border-radius:6px; padding:6px; font-size:10px;">📖</div>
+                <div style="margin-top:8px; text-align:left;">
+                    <div class="s" style="font-size:12px; font-weight:700; color:var(--ink);">Laskar Pelangi</div>
+                    <div style="font-size:10px; color:var(--muted); margin-top:2px;">Andrea Hirata</div>
+                    <span class="badge ok" style="font-size:9px; padding:2px 6px; margin-top:6px; display:inline-block;">Tersedia</span>
+                </div>
+            </div>
+
+            <div style="transform:translateY(-14px) scale(1.05); background:#ffffff; padding:8px; border-radius:12px; box-shadow:0 12px 28px rgba(15,27,61,0.22); width:125px;">
+                <div class="bk" style="background:#1D4ED8; height:120px; border-radius:6px; padding:6px; font-size:10px;">📚</div>
+                <div style="margin-top:8px; text-align:left;">
+                    <div class="s" style="font-size:12px; font-weight:700; color:var(--ink);">Fisika Modern</div>
+                    <div style="font-size:10px; color:var(--muted); margin-top:2px;">Halliday</div>
+                    <span class="badge ok" style="font-size:9px; padding:2px 6px; margin-top:6px; display:inline-block;">Tersedia</span>
+                </div>
+            </div>
+
+            <div style="transform:rotate(6deg) translateY(6deg); background:#ffffff; padding:8px; border-radius:12px; box-shadow:0 12px 28px rgba(15,27,61,0.22); width:125px;">
+                <div class="bk" style="background:#FFC93C; color:#0F1B3D; height:120px; border-radius:6px; padding:6px; font-size:10px;">📕</div>
+                <div style="margin-top:8px; text-align:left;">
+                    <div class="s" style="font-size:12px; font-weight:700; color:var(--ink);">Sejarah Dunia</div>
+                    <div style="font-size:10px; color:var(--muted); margin-top:2px;">H.G. Wells</div>
+                    <span class="badge ok" style="font-size:9px; padding:2px 6px; margin-top:6px; display:inline-block;">Tersedia</span>
+                </div>
+            </div>
         @endif
     </div>
 </section>
