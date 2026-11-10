@@ -7,7 +7,7 @@ use App\Models\Buku;
 
 class KatalogController extends Controller
 {
-    // Beranda Publik (Dapat diakses tanpa login)
+    // Beranda Publik (Tanpa login)
     public function publicIndex()
     {
         $books = Buku::latest()->get();

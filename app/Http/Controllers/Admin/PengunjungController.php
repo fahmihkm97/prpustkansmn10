@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 
-class PengembalianAdminController extends Controller
+class PengunjungController extends Controller
 {
     public function index()
     {

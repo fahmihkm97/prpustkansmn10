@@ -17,12 +17,12 @@
             $title = $b->buku->title ?? 'Buku';
         @endphp
         
-        <!-- Kartu Peminjaman dengan Susunan Flex Vertikal untuk Mencegah Overlap -->
+        <!-- Kartu Peminjaman -->
         <div class="cd" style="padding:18px;border-radius:20px;margin-bottom:16px;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap">
             
-            <!-- Cover Buku -->
+            <!-- Cover Buku (Diperbaiki ke partials.sampul-buku) -->
             <div style="flex:none">
-                @include('partials.book-cover', ['title' => $title, 'class' => 'bk-sm'])
+                @include('partials.sampul-buku', ['title' => $title, 'class' => 'bk-sm'])
             </div>
 
             <!-- Informasi Buku -->
@@ -40,7 +40,7 @@
                 </div>
             </div>
             
-            <!-- Kotak Tampilan Kode Transaksi (Tertata Rapi di Samping/Bawah) -->
+            <!-- Kotak Kode Transaksi -->
             <div style="background:var(--head);border:2px dashed var(--line-2);border-radius:14px;padding:12px 16px;text-align:center;width:100%;max-width:220px;margin-left:auto">
                 <div class="ba" style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--muted);letter-spacing:.05em">Kode Transaksi</div>
                 <div class="s" style="font-size:18px;color:var(--blue);margin-top:2px;letter-spacing:1px">{{ $b->trx_code }}</div>

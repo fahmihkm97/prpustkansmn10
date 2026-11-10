@@ -14,17 +14,23 @@ class PeminjamanSiswaController extends Controller
     {
         $borrowings = Peminjaman::with('buku')
             ->where('user_id', auth()->id())
+            ->whereIn('status', ['PENDING', 'DIPINJAM', 'TERLAMBAT'])
             ->latest()
             ->get();
 
-        // Diperbaiki: Menggunakan nama view baru 'siswa.peminjaman-aktif'
-        return view('siswa.peminjaman-aktif', compact('borrowings'));
+        $viewName = view()->exists('siswa.peminjaman-aktif') ? 'siswa.peminjaman-aktif' : 'siswa.peminjaman';
+        return view($viewName, compact('borrowings'));
     }
 
-    // Diperbaiki: Menerima parameter $id dari URL maupun input buku_id dari Form Request
+    // Alias handler untuk rute POST /siswa/pinjam/{id}
+    public function pinjam(Request $request, $id = null)
+    {
+        return $this->storeRequest($request, $id);
+    }
+
     public function storeRequest(Request $request, $id = null)
     {
-        $bukuId = $id ?? $request->buku_id;
+        $bukuId = $id ?? $request->buku_id ?? $request->book_id;
 
         if (!$bukuId) {
             return back()->with('error', 'Buku tidak ditemukan.');
@@ -36,26 +42,26 @@ class PeminjamanSiswaController extends Controller
             return back()->with('error', 'Stok buku sedang habis.');
         }
 
-        // Cek jika siswa masih memiliki transaksi PENDING atau DIPINJAM untuk buku yang sama
+        // PERBAIKAN: Menggunakan nama kolom 'book_id' (bukan 'buku_id')
         $existing = Peminjaman::where('user_id', auth()->id())
-            ->where('buku_id', $buku->id)
-            ->whereIn('status', ['PENDING', 'DIPINJAM'])
+            ->where('book_id', $buku->id)
+            ->whereIn('status', ['PENDING', 'DIPINJAM', 'TERLAMBAT'])
             ->first();
 
         if ($existing) {
-            return back()->with('error', 'Anda masih memiliki peminjaman aktif untuk buku ini.');
+            return back()->with('warning', 'Anda masih memiliki peminjaman aktif untuk buku ini.');
         }
 
-        // Generate Kode Transaksi dengan format BOOK-
-        $trxCode = 'BOOK-' . strtoupper(Str::random(6));
+        // Generate Kode Transaksi unik
+        $trxCode = 'TRX-' . strtoupper(Str::random(8));
 
         Peminjaman::create([
             'trx_code' => $trxCode,
             'user_id'  => auth()->id(),
-            'buku_id'  => $buku->id,
+            'book_id'  => $buku->id, // PERBAIKAN: book_id
             'status'   => 'PENDING',
         ]);
 
-        return back()->with('success', 'Berhasil melakukan pemesanan buku. Kode Transaksi Anda: ' . $trxCode);
+        return redirect()->route('siswa.peminjaman')->with('success', 'Berhasil memesan buku! Kode Transaksi Anda: ' . $trxCode);
     }
 }

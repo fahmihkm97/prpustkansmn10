@@ -13,7 +13,9 @@
     @forelse ($returns as $r)
         @php $title = $r->buku->title ?? 'Buku'; @endphp
         <div class="loan" style="border-radius:18px">
-            @include('partials.book-cover', ['title' => $title, 'class' => 'bk-sm'])
+            <!-- Cover Buku (Diperbaiki ke partials.sampul-buku) -->
+            @include('partials.sampul-buku', ['title' => $title, 'class' => 'bk-sm'])
+            
             <div class="info-col">
                 <b style="font-size:15px">{{ $title }}</b>
                 <div class="ba">Kode: <b>{{ $r->trx_code }}</b></div>
