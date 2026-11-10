@@ -3,16 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Visitor; // Sesuaikan dengan nama Model Pengunjung Anda (misal: Pengunjung)
+use App\Models\Visitor;
 use Illuminate\Http\Request;
 
 class PengunjungController extends Controller
 {
     public function index()
     {
-        // Pastikan view yang dipanggil adalah 'admin.daftar-pengunjung'
-        $visitors = class_exists(Visitor::class) ? Visitor::latest()->get() : collect();
-        
+        $visitors = Visitor::latest()->get();
         return view('admin.daftar-pengunjung', compact('visitors'));
     }
 
@@ -22,24 +20,36 @@ class PengunjungController extends Controller
             'name' => 'required|string|max:255',
         ]);
 
-        if (class_exists(Visitor::class)) {
-            Visitor::create([
-                'name'     => $request->name,
-                'identity' => $request->identity,
-                'purpose'  => $request->purpose ?? 'Membaca / Meminjam Buku',
-            ]);
-        }
+        Visitor::create([
+            'name'     => $request->name,
+            'identity' => $request->identity,
+            'purpose'  => $request->purpose ?: 'Membaca / Meminjam Buku',
+        ]);
 
-        return back()->with('success', 'Data pengunjung berhasil dicatat.');
+        return redirect()->route('admin.daftar-pengunjung')->with('success', 'Data pengunjung berhasil dicatat.');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $visitor = Visitor::findOrFail($id);
+        $visitor->update([
+            'name'     => $request->name,
+            'identity' => $request->identity,
+            'purpose'  => $request->purpose ?: 'Membaca / Meminjam Buku',
+        ]);
+
+        return redirect()->route('admin.daftar-pengunjung')->with('success', 'Data pengunjung berhasil diperbarui.');
     }
 
     public function destroy($id)
     {
-        if (class_exists(Visitor::class)) {
-            $visitor = Visitor::findOrFail($id);
-            $visitor->delete();
-        }
+        $visitor = Visitor::findOrFail($id);
+        $visitor->delete();
 
-        return back()->with('success', 'Data kunjungan berhasil dihapus.');
+        return redirect()->route('admin.daftar-pengunjung')->with('success', 'Data kunjungan berhasil dihapus.');
     }
 }

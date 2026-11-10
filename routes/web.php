@@ -51,9 +51,10 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/kelola-user', [UserController::class, 'store'])->name('user.store');
         Route::delete('/kelola-user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 
-        // Kelola Daftar Pengunjung Perpustakaan
+        // Kelola Daftar Pengunjung Perpustakaan (Lengkap CRUD)
         Route::get('/daftar-pengunjung', [PengunjungController::class, 'index'])->name('daftar-pengunjung');
         Route::post('/daftar-pengunjung', [PengunjungController::class, 'store'])->name('pengunjung.store');
+        Route::put('/daftar-pengunjung/{id}', [PengunjungController::class, 'update'])->name('pengunjung.update');
         Route::delete('/daftar-pengunjung/{id}', [PengunjungController::class, 'destroy'])->name('pengunjung.destroy');
 
         // Data Peminjaman Aktif, Pengembalian, & Siswa Terlambat
