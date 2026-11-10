@@ -30,7 +30,7 @@
                 <div class="s" style="font-size:18px;margin-bottom:4px">{{ $title }}</div>
                 <div class="ba" style="margin-bottom:8px">
                     @if ($b->status === 'PENDING')
-                        Tunjukkan Kode Transaksi di bawah ke petugas
+                        Tunjukkan Kode ke petugas
                     @else
                         Batas Kembali: <b>{{ $b->due_date ? \Carbon\Carbon::parse($b->due_date)->format('d M Y') : '-' }}</b>
                     @endif
@@ -42,7 +42,7 @@
             
             <!-- Kotak Kode Transaksi -->
             <div style="background:var(--head);border:2px dashed var(--line-2);border-radius:14px;padding:12px 16px;text-align:center;width:100%;max-width:220px;margin-left:auto">
-                <div class="ba" style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--muted);letter-spacing:.05em">Kode Transaksi</div>
+                <div class="ba" style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--muted);letter-spacing:.05em">Kode</div>
                 <div class="s" style="font-size:18px;color:var(--blue);margin-top:2px;letter-spacing:1px">{{ $b->trx_code }}</div>
             </div>
 

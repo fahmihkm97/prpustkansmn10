@@ -22,7 +22,6 @@ class PeminjamanSiswaController extends Controller
         return view($viewName, compact('borrowings'));
     }
 
-    // Alias handler untuk rute POST /siswa/pinjam/{id}
     public function pinjam(Request $request, $id = null)
     {
         return $this->storeRequest($request, $id);
@@ -42,7 +41,6 @@ class PeminjamanSiswaController extends Controller
             return back()->with('error', 'Stok buku sedang habis.');
         }
 
-        // PERBAIKAN: Menggunakan nama kolom 'book_id' (bukan 'buku_id')
         $existing = Peminjaman::where('user_id', auth()->id())
             ->where('book_id', $buku->id)
             ->whereIn('status', ['PENDING', 'DIPINJAM', 'TERLAMBAT'])
@@ -52,16 +50,27 @@ class PeminjamanSiswaController extends Controller
             return back()->with('warning', 'Anda masih memiliki peminjaman aktif untuk buku ini.');
         }
 
-        // Generate Kode Transaksi unik
-        $trxCode = 'TRX-' . strtoupper(Str::random(8));
+        // Diubah: Format kode menjadi BOOK- dikuti 4 karakter acak (contoh: BOOK-1T27)
+        $trxCode = 'BOOK-' . strtoupper(Str::random(4));
 
         Peminjaman::create([
             'trx_code' => $trxCode,
             'user_id'  => auth()->id(),
-            'book_id'  => $buku->id, // PERBAIKAN: book_id
+            'book_id'  => $buku->id,
             'status'   => 'PENDING',
         ]);
 
-        return redirect()->route('siswa.peminjaman')->with('success', 'Berhasil memesan buku! Kode Transaksi Anda: ' . $trxCode);
+        return redirect()->route('siswa.peminjaman')->with('success', 'Berhasil memesan buku! Kode Anda: ' . $trxCode);
+    }
+
+    public function riwayat()
+    {
+        $returns = Peminjaman::with('buku')
+            ->where('user_id', auth()->id())
+            ->where('status', 'DIKEMBALIKAN')
+            ->latest()
+            ->get();
+
+        return view('siswa.riwayat-pengembalian', compact('returns'));
     }
 }

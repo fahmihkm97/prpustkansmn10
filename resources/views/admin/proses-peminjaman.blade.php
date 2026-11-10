@@ -1,35 +1,49 @@
 @extends('layouts.admin')
-@section('title', 'Proses Peminjaman')
+@section('title', 'Proses Peminjaman & Pengembalian')
 
 @section('content')
 <div class="page-head">
     <div>
-        <h1 class="s">Proses Peminjaman</h1>
-        <div class="ba">Masukkan Kode Transaksi (BOOK/TRX) untuk mengecek detail serta memproses penyerahan / pengembalian buku</div>
+        <h1 class="s">Proses Peminjaman & Pengembalian</h1>
     </div>
 </div>
 
-<div style="max-width:640px;margin:0 auto">
-    <!-- Form Pencarian Kode TRX -->
-    <div class="cd" style="padding:28px;margin-bottom:24px">
-        <label class="label">Kode Pinjaman</label>
+<div style="max-width:680px;margin:0 auto">
+    <!-- Pilihan Mode (Tab Peminjaman / Pengembalian) -->
+    <div class="tabs" style="justify-content:center;margin-bottom:20px;">
+        <button type="button" class="tab on" id="tab-pinjam" onclick="switchMode('PINJAM')">
+            Peminjaman Buku
+        </button>
+        <button type="button" class="tab" id="tab-kembali" onclick="switchMode('KEMBALI')">
+            Pengembalian Buku
+        </button>
+    </div>
+
+    <!-- Form Input Kode -->
+    <div class="cd" style="padding:28px;margin-bottom:24px;">
+        <div style="margin-bottom:14px">
+            <h2 class="s" id="mode-title" style="font-size:18px;color:var(--blue)">Input Kode Peminjaman</h2>
+            <div class="muted" id="mode-desc" style="font-size:12px">Masukkan kode peminjaman siswa untuk memproses penyerahan buku.</div>
+        </div>
+
+        <label class="label" id="input-label">Kode Peminjaman</label>
         <div style="display:flex;gap:12px">
-            <input class="input" id="trx_input" placeholder="Ketik kode (contoh: TRX-8F9A2B)" style="flex:1" autofocus autocomplete="off">
-            <button type="button" class="btn btn-blue" id="btn-cek">Cek Transaksi</button>
+            <input class="input" id="trx_input" placeholder="Ketik kode (contoh: BOOK-1T27)" style="flex:1" autofocus autocomplete="off">
+            <button type="button" class="btn btn-blue" id="btn-cek">Cek Kode</button>
         </div>
         <div id="trx-error" class="field-err" style="display:none;margin-top:10px;font-weight:600"></div>
     </div>
 
-    <!-- Kartu Informasi Detail Transaksi -->
+    <!-- Kartu Informasi Detail Peminjaman -->
     <div class="cd" id="detail-card" style="display:none;padding:28px">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-            <h2 class="s" style="font-size:20px">Detail Transaksi</h2>
+            <h2 class="s" style="font-size:20px">Detail Peminjaman</h2>
             <span id="d-badge" class="badge"></span>
         </div>
 
         <div style="margin-bottom:24px">
             <div class="rrow">
-                <span class="muted">Kode Transaksi</span>
+                <span class="muted">Kode Peminjaman</span>
                 <b id="d-trx" style="color:var(--blue)">-</b>
             </div>
             <div class="rrow">
@@ -46,7 +60,7 @@
             </div>
         </div>
 
-        <!-- Tombol Aksi Otomatis Sesuai Status -->
+        <!-- Tombol Aksi Sesuai Status dan Mode -->
         <div id="action-area"></div>
     </div>
 </div>
@@ -54,17 +68,57 @@
 
 @push('scripts')
 <script>
+let currentMode = 'PINJAM';
+
 const inputTrx = document.getElementById('trx_input');
 const btnCek = document.getElementById('btn-cek');
 const errBox = document.getElementById('trx-error');
 const detailCard = document.getElementById('detail-card');
+
+function switchMode(mode) {
+    currentMode = mode;
+    detailCard.style.display = 'none';
+    errBox.style.display = 'none';
+    inputTrx.value = '';
+
+    const tabPinjam = document.getElementById('tab-pinjam');
+    const tabKembali = document.getElementById('tab-kembali');
+    const modeTitle = document.getElementById('mode-title');
+    const modeDesc = document.getElementById('mode-desc');
+    const inputLabel = document.getElementById('input-label');
+
+    if (mode === 'PINJAM') {
+        tabPinjam.classList.add('on');
+        tabKembali.classList.remove('on');
+        
+        modeTitle.textContent = 'Input Kode Peminjaman';
+        modeTitle.style.color = 'var(--blue)';
+        modeDesc.textContent = 'Masukkan kode peminjaman siswa untuk memproses penyerahan buku.';
+        inputLabel.textContent = 'Kode Peminjaman';
+        inputTrx.placeholder = 'Ketik kode (contoh: BOOK-1T27)';
+        btnCek.className = 'btn btn-blue';
+    } else {
+        tabKembali.classList.add('on');
+        tabPinjam.classList.remove('on');
+        
+        modeTitle.textContent = 'Input Kode Pengembalian';
+        modeTitle.style.color = 'var(--ok-fg)';
+        modeDesc.textContent = 'Masukkan kode pengembalian siswa untuk mengonfirmasi pengembalian buku.';
+        inputLabel.textContent = 'Kode Pengembalian';
+        inputTrx.placeholder = 'Ketik kode (contoh: BOOK-1T27)';
+        btnCek.className = 'btn';
+        btnCek.style.background = 'var(--ok-bg)';
+        btnCek.style.color = 'var(--ok-fg)';
+    }
+    inputTrx.focus();
+}
 
 function cariTransaksi() {
     const code = inputTrx.value.trim();
     errBox.style.display = 'none';
     
     if (!code) {
-        errBox.textContent = 'Silahkan masukkan kode transaksi terlebih dahulu.';
+        errBox.textContent = `Silahkan masukkan kode ${currentMode === 'PINJAM' ? 'peminjaman' : 'pengembalian'} terlebih dahulu.`;
         errBox.style.display = 'block';
         return;
     }
@@ -76,11 +130,11 @@ function cariTransaksi() {
         .then(res => res.json())
         .then(res => {
             btnCek.disabled = false;
-            btnCek.textContent = 'Cek Transaksi';
+            btnCek.textContent = 'Cek Kode';
 
             if (!res.success) {
                 detailCard.style.display = 'none';
-                errBox.textContent = res.message || 'Kode transaksi tidak ditemukan.';
+                errBox.textContent = res.message || 'Kode tidak ditemukan.';
                 errBox.style.display = 'block';
                 return;
             }
@@ -103,21 +157,37 @@ function cariTransaksi() {
             actionArea.innerHTML = '';
 
             if (data.status === 'PENDING') {
-                actionArea.innerHTML = `
-                    <button type="button" class="btn btn-blue btn-block" onclick="prosesSerahkan('${data.trx_code}')">
-                        ✓ Serahkan Buku ke Siswa (Ubah ke DIPINJAM)
-                    </button>
-                `;
+                if (currentMode === 'PINJAM') {
+                    actionArea.innerHTML = `
+                        <button type="button" class="btn btn-blue btn-block" onclick="prosesSerahkan('${data.trx_code}')">
+                            ✓ Serahkan Buku ke Siswa (Ubah ke DIPINJAM)
+                        </button>
+                    `;
+                } else {
+                    actionArea.innerHTML = `
+                        <div style="text-align:center;padding:14px;background:var(--wn-bg);color:var(--wn-fg);border-radius:12px;font-weight:700">
+                            Status peminjaman ini masih PENDING (Belum diserahkan ke siswa). Silahkan gunakan menu Penyerahan Buku terlebih dahulu.
+                        </div>
+                    `;
+                }
             } else if (data.status === 'DIPINJAM' || data.status === 'TERLAMBAT') {
-                actionArea.innerHTML = `
-                    <button type="button" class="btn btn-block" style="background:var(--ok-bg);color:var(--ok-fg)" onclick="prosesKembalikan('${data.trx_code}')">
-                        ✓ Konfirmasi Pengembalian Buku
-                    </button>
-                `;
+                if (currentMode === 'KEMBALI') {
+                    actionArea.innerHTML = `
+                        <button type="button" class="btn btn-block" style="background:var(--ok-bg);color:var(--ok-fg);font-size:14px" onclick="prosesKembalikan('${data.trx_code}')">
+                            ✓ Konfirmasi Pengembalian Buku
+                        </button>
+                    `;
+                } else {
+                    actionArea.innerHTML = `
+                        <div style="text-align:center;padding:14px;background:var(--info-bg);color:var(--info-fg);border-radius:12px;font-weight:700">
+                            Buku ini sedang dipinjam siswa. Untuk mengembalikan, silahkan pindah ke Tab "Pengembalian Buku".
+                        </div>
+                    `;
+                }
             } else if (data.status === 'DIKEMBALIKAN') {
                 actionArea.innerHTML = `
                     <div style="text-align:center;padding:14px;background:var(--head);border-radius:12px;font-weight:700;color:var(--muted)">
-                        Transaksi ini sudah selesai (Buku Dikembalikan).
+                        Peminjaman ini sudah selesai (Buku Dikembalikan).
                     </div>
                 `;
             }
@@ -126,22 +196,39 @@ function cariTransaksi() {
         })
         .catch(() => {
             btnCek.disabled = false;
-            btnCek.textContent = 'Cek Transaksi';
+            btnCek.textContent = 'Cek Kode';
             errBox.textContent = 'Terjadi kesalahan sistem saat mengambil data.';
             errBox.style.display = 'block';
         });
 }
 
 function prosesSerahkan(code) {
+    const today = new Date();
+    today.setDate(today.getDate() + 7);
+    const defaultDate = today.toISOString().split('T')[0];
+
     Swal.fire({
-        title: 'Konfirmasi Penyerahan',
-        text: `Konfirmasi penyerahan buku untuk transaksi ${code}?`,
+        title: 'Konfirmasi Penyerahan Buku',
+        html: `
+            <div style="text-align:left;font-size:14px">
+                <p style="margin-bottom:12px">Konfirmasi penyerahan buku untuk kode <b>${code}</b>?</p>
+                <label style="font-weight:600;display:block;margin-bottom:6px">Atur Batas Tanggal Pengembalian:</label>
+                <input type="date" id="swal-due-date" class="swal2-input" value="${defaultDate}" style="margin:0;width:100%;box-sizing:border-box">
+            </div>
+        `,
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: '#1D4ED8',
         cancelButtonColor: '#4A5780',
         confirmButtonText: 'Ya, Serahkan',
-        cancelButtonText: 'Batal'
+        cancelButtonText: 'Batal',
+        preConfirm: () => {
+            const dueDate = document.getElementById('swal-due-date').value;
+            if (!dueDate) {
+                Swal.showValidationMessage('Silahkan pilih batas tanggal pengembalian!');
+            }
+            return dueDate;
+        }
     }).then((result) => {
         if (result.isConfirmed) {
             fetch('{{ route("admin.peminjaman.approve") }}', {
@@ -150,7 +237,7 @@ function prosesSerahkan(code) {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
-                body: JSON.stringify({ trx_code: code })
+                body: JSON.stringify({ trx_code: code, due_date: result.value })
             })
             .then(r => r.json())
             .then(res => {
@@ -169,8 +256,8 @@ function prosesSerahkan(code) {
 
 function prosesKembalikan(code) {
     Swal.fire({
-        title: 'Konfirmasi Pengembalian',
-        text: `Konfirmasi pengembalian buku untuk transaksi ${code}?`,
+        title: 'Konfirmasi Pengembalian Buku',
+        text: `Konfirmasi pengembalian buku untuk kode ${code}?`,
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: '#059669',

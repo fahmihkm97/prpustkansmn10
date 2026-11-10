@@ -13,13 +13,13 @@ class PeminjamanAdminController extends Controller
         return view('admin.proses-peminjaman');
     }
 
-    // Mengambil Detail Transaksi Berdasarkan Kode TRX
+    // Mengambil Detail Peminjaman Berdasarkan Kode (TRX)
     public function getDetail($trx_code)
     {
         $peminjaman = Peminjaman::with(['user', 'buku'])->where('trx_code', $trx_code)->first();
 
         if (!$peminjaman) {
-            return response()->json(['success' => false, 'message' => 'Kode Transaksi tidak ditemukan!'], 404);
+            return response()->json(['success' => false, 'message' => 'Kode peminjaman / pengembalian tidak ditemukan!'], 404);
         }
 
         return response()->json([
@@ -41,7 +41,6 @@ class PeminjamanAdminController extends Controller
             ->latest()
             ->get();
 
-        // Diperbaiki: Disesuaikan dengan nama view baru 'admin.peminjaman-aktif'
         return view('admin.peminjaman-aktif', compact('borrowings'));
     }
 
@@ -52,14 +51,14 @@ class PeminjamanAdminController extends Controller
         $peminjaman = Peminjaman::where('trx_code', $request->trx_code)->first();
 
         if (!$peminjaman) {
-            return response()->json(['success' => false, 'message' => 'Kode Transaksi tidak ditemukan!'], 404);
+            return response()->json(['success' => false, 'message' => 'Kode peminjaman tidak ditemukan!'], 404);
         }
 
         if ($peminjaman->status !== 'PENDING') {
-            return response()->json(['success' => false, 'message' => 'Status transaksi bukan PENDING.'], 400);
+            return response()->json(['success' => false, 'message' => 'Status peminjaman ini bukan PENDING.'], 400);
         }
 
-        // Pengecekan keamanan stok buku
+        // Pengecekan stok buku
         if ($peminjaman->buku) {
             if ($peminjaman->buku->stock <= 0) {
                 return response()->json(['success' => false, 'message' => 'Stok buku ini sedang habis.'], 400);
@@ -67,12 +66,15 @@ class PeminjamanAdminController extends Controller
             $peminjaman->buku->decrement('stock');
         }
 
+        // Tanggal batas pengembalian dapat diatur dari request atau default 7 hari
+        $dueDate = $request->due_date ? $request->due_date : now()->addDays(7);
+
         $peminjaman->update([
             'status' => 'DIPINJAM',
             'borrowed_at' => now(),
-            'due_date' => now()->addDays(7),
+            'due_date' => $dueDate,
         ]);
 
-        return response()->json(['success' => true, 'message' => 'Buku berhasil diserahkan ke siswa. Status: DIPINJAM.']);
+        return response()->json(['success' => true, 'message' => 'Buku berhasil diserahkan ke siswa. Status berubah ke DIPINJAM.']);
     }
 }

@@ -3,45 +3,43 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Peminjaman;
+use App\Models\Visitor; // Sesuaikan dengan nama Model Pengunjung Anda (misal: Pengunjung)
 use Illuminate\Http\Request;
 
 class PengunjungController extends Controller
 {
     public function index()
     {
-        $returns = Peminjaman::with(['user', 'buku'])
-            ->where('status', 'DIKEMBALIKAN')
-            ->latest()
-            ->get();
-
-        return view('admin.data-pengembalian', compact('returns'));
+        // Pastikan view yang dipanggil adalah 'admin.daftar-pengunjung'
+        $visitors = class_exists(Visitor::class) ? Visitor::latest()->get() : collect();
+        
+        return view('admin.daftar-pengunjung', compact('visitors'));
     }
 
-    public function approveReturn(Request $request)
+    public function store(Request $request)
     {
-        $request->validate(['trx_code' => 'required']);
-
-        $peminjaman = Peminjaman::where('trx_code', $request->trx_code)->first();
-
-        if (!$peminjaman) {
-            return response()->json(['success' => false, 'message' => 'Kode Transaksi tidak ditemukan!'], 404);
-        }
-
-        if (!in_array($peminjaman->status, ['DIPINJAM', 'TERLAMBAT'])) {
-            return response()->json(['success' => false, 'message' => 'Buku belum dipinjam atau sudah dikembalikan.'], 400);
-        }
-
-        // Pengecekan null safety sebelum menambah stok
-        if ($peminjaman->buku) {
-            $peminjaman->buku->increment('stock');
-        }
-
-        $peminjaman->update([
-            'status' => 'DIKEMBALIKAN',
-            'returned_at' => now(),
+        $request->validate([
+            'name' => 'required|string|max:255',
         ]);
 
-        return response()->json(['success' => true, 'message' => 'Pengembalian dikonfirmasi. Stok buku bertambah kembali.']);
+        if (class_exists(Visitor::class)) {
+            Visitor::create([
+                'name'     => $request->name,
+                'identity' => $request->identity,
+                'purpose'  => $request->purpose ?? 'Membaca / Meminjam Buku',
+            ]);
+        }
+
+        return back()->with('success', 'Data pengunjung berhasil dicatat.');
+    }
+
+    public function destroy($id)
+    {
+        if (class_exists(Visitor::class)) {
+            $visitor = Visitor::findOrFail($id);
+            $visitor->delete();
+        }
+
+        return back()->with('success', 'Data kunjungan berhasil dihapus.');
     }
 }

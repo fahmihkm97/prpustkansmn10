@@ -25,14 +25,13 @@ class PengembalianAdminController extends Controller
         $peminjaman = Peminjaman::where('trx_code', $request->trx_code)->first();
 
         if (!$peminjaman) {
-            return response()->json(['success' => false, 'message' => 'Kode Transaksi tidak ditemukan!'], 404);
+            return response()->json(['success' => false, 'message' => 'Kode pengembalian tidak ditemukan!'], 404);
         }
 
         if (!in_array($peminjaman->status, ['DIPINJAM', 'TERLAMBAT'])) {
             return response()->json(['success' => false, 'message' => 'Buku belum dipinjam atau sudah dikembalikan.'], 400);
         }
 
-        // Pengecekan null safety sebelum menambah stok
         if ($peminjaman->buku) {
             $peminjaman->buku->increment('stock');
         }
@@ -42,6 +41,6 @@ class PengembalianAdminController extends Controller
             'returned_at' => now(),
         ]);
 
-        return response()->json(['success' => true, 'message' => 'Pengembalian dikonfirmasi. Stok buku bertambah kembali.']);
+        return response()->json(['success' => true, 'message' => 'Pengembalian buku berhasil dikonfirmasi. Stok buku bertambah kembali.']);
     }
 }
